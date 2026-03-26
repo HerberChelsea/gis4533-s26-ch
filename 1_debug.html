@@ -58,7 +58,7 @@
     <!-- Header at the top of the page -->
     <div class="header">
         <h1>A Working Web Map</h1>
-        <h3>Subtitle</h3>
+        <h3>Web map of UMD campus</h3>
     </div>
     
     <div id="map" style="width: 600px; height: 400px;"></div>
@@ -71,7 +71,7 @@
         // the ID provided to the leaflet map 
         let map = L.map('map')
         // Center the map on UMD campus, and set the zoom level
-        map.setView([-92.08, 46.82], 15); /* Would be the last thing we need to fix if it was working correctly*/
+        map.setView([46.82, -92.08], 15); /* Would be the last thing we need to fix if it was working correctly*/
         
         // Add OpenStreetMap tiles
 
