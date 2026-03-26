@@ -71,7 +71,8 @@
         // the ID provided to the leaflet map 
         let map = L.map('map')
         // Center the map on UMD campus, and set the zoom level
-        map.setView([46.82, -92.08], 15); /* Would be the last thing we need to fix if it was working correctly*/
+        map.setView([46.82, -92.08], 15); 
+        /* Was set as longitude, latitude ([-92.08, 46.83]) so fixed to latitude, longitude ([46.82,-92.08]) */
         
         // Add OpenStreetMap tiles
 
