@@ -1,5 +1,5 @@
 <!-- 
-    Assignment 1: Modify a leaflet web map
+    Assignment 2: Modify a leaflet web map
     In this assignment you will start with a working web map, and then modify and add to it.
 
     Task:
@@ -24,37 +24,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Most Basic Web Map</title>
+    <title>My Top Favorite Spots in Duluth!</title> 
     
     <!-- Leaflet CSS stylesheet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
-    <style></style>
+    <style>
+        h1{color:seagreen;
+
+        }
+        h3{color: seagreen;
+
+        }
+        b{color:seagreen;
+            text-align: center;
+        }
+        #map{
+            width: 700px;
+            height: 700px;
+        }
+/* Changed style of title, subtitle, and description */
+    </style>
 </head>
 <body>
     <!-- Header at the top of the page -->
     <div class="header">
-        <h1>A Mostly Basic Web Map</h1>
-        <h3>by: Your Name Here</h3>
+        <h1>My Top Favorite Spots in Duluth!</h1>
+        <h3>Chelsea Herber</h3>
+        <b> My favorite places in Duluth are Dovetail for a nice cup of coffee while working on homework or eatting with friends.
+            My other favorite place is Eddie Bauer, where I work and enjoy connecting with customers. My final place is Uncle Louis 
+            which has turned into a consistent place to go out to eat with family.
+        </b>
     </div>
-    <div id="map" style="width: 600px; height: 400px;"></div>
+    <div id="map" style="width: 1000px; height: 700px;"></div>
     
     <!-- Leaflet JavaScript library -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <script>
         // Initialize the map, center it on UMD campus, and set the zoom level
-        const map = L.map('map').setView([46.82, -92.08], 13);
+        const map = L.map('map').setView([46.7946034, -92.0959517], 13);
 
         // Add OpenStreetMap tiles
-        const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        const tiles = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
+            attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo (map); //* Changed png link to the basemap that I wanted to use*//
 
         // Add a marker for the UMD campus
         const marker = L.marker([46.82, -92.085]).addTo(map);
-        marker.bindPopup("<b>University of Minnesota Duluth</b><br>A great place to learn about GIS!").openPopup();
+        marker.bindPopup("<b>University of Minnesota Duluth</b><br>A great place to learn about GIS! <img width=250 src='https://d3hk6w1rfu80ox.cloudfront.net/media/uploads/listings/university-of-minnesota-duluth/M3wfycHUzn_o.jpg'</img>").openPopup();
+        
+        const markerUncleLouis = L.marker([46.7946034, -92.0959517]).addTo(map);
+        markerUncleLouis.bindPopup("<b>Uncle Louis</b><br>A great place for delicious breakfast <img src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhpXBanyLgM3wcNSkgHlGxOlWhemLudTKtUQ&s'</img>").openPopup();
+
+        const markerBarnesAndNoble = L.marker([46.8043006, -92.1579317]).addTo(map);
+        markerBarnesAndNoble.bindPopup("<b>Barnes & Noble</b><br>A dangerous place for me to go :) <img src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxe3sucYF_kAFpDwmlhEZGe35gluJw04VXnA&s'</img> ")
+        markerBarnesAndNoble.openPopup();
+    
+        const markerDoveTail = L.marker([46.768513, -92.1227974]).addTo(map);
+        markerDoveTail.bindPopup("<b>Dovetail</b><br>A great place to enjoy coffee and do homework! <img width=250 src= 'https://onlakesuperior.com/wp-content/uploads/2024/03/IMG_7294.jpeg'</img>").openPopup();
+        //* Made new marker names and added coordinates to mark the locations on the map*//
     </script>
 </body>
 </html>
