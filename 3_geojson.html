@@ -65,14 +65,82 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <script>
+
+        // my geojson supporting functions
+        // these are called when the geojson layer is created
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+        }
+
+        // my geojson style function 
+        function attendanceAreasStyle() {
+            return{
+                color: "black",
+                weight: 2, 
+                fillOpacity: 0.5,
+                // for the fillcolor we call the getRandomColor function
+                // which returns a random color for us to use 
+                fillColor: getRandomColor()
+            }
+        }
+     // 4. Add Popups to GeoJSON
+     // Add functionality so that when the user clicks on an attendance area, the schools for that 
+     // area are listed in the popup.
+
+     // geojson popup function 
+     function attendanceAreasonEachFeature(feature, layer){
+        // create popup content based on feature properties
+        const popupContent = `
+        <h3>Attendance Area Schools</h3>
+        <p><em>elementary: </em><b>${feature.properties.ELEM_NAME}</b></p>
+        `;
+        <p><em>middle: </em><b>${feature.properties.MIDD_NAME}</b></p>
+        `;
+        <p><em>highschool: </em><b>${feature.properties.HGIH_NAME}</b></p>
+        `;
+
+        // actually calls the popup 
+        layer.blindPopup(popupContent);
+     }
+
         // Initialize the map, center it on UMD campus, and set the zoom level
-        const map = L.map('map').setView([46.82, -92.08], 13);
+        const map = L.map('map').setView([46.82, -92.08], 11);
 
         // Add OpenStreetMap tiles
         const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
+
+        //2. Add GeoJSON of Attendance
+
+        // fetch geojson file
+        fetch("duluth_school_attendance_areas1.json")
+            // once we fetch geojson we need to convert the response
+            // into a json format 
+            .then(function(response){
+                const responseJSON = response.json()
+                console.log(response.json)
+                // pass along the json to the next function 
+                return response.json()
+            })
+            // take the json data (our geojson tile's data)
+            // and create a leaflet layer based on that geojson 
+            .then(function(geojsonData){
+                console.log('the geojson data', geojsonData)
+                L.geoJSON(geojsonData,
+                    {
+                        style: attendanceAreasStyle
+                        onEachFeature: attendanceAreasonEachFeature
+                    }
+                ).addTo(map)
+            })
     </script>
 </body>
 </html>
