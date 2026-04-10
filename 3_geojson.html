@@ -56,10 +56,33 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
-    <style></style>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: whitesmoke;
+            margin: 0;
+        }
+        h1{
+            text-align: center;
+            color: darkgreen;
+        }
+        h3{
+            text-align: center;
+            color: darkgreen;
+        }
+        #map{
+            width: 80%;
+            height: 600px;
+            margin: 20px auto;
+            border: 3px solid darkgreen;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-    <div id="map" style="width: 600px; height: 400px;"></div>
+    <h1>Duluth School Attendance Areas</h1>
+    <h3>A map of Elementary, Middle, and High School Zones in Duluth</h3>
+    <div id="map"></div>
     
     <!-- Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -99,14 +122,12 @@
         const popupContent = `
         <h3>Attendance Area Schools</h3>
         <p><em>elementary: </em><b>${feature.properties.ELEM_NAME}</b></p>
-        `;
         <p><em>middle: </em><b>${feature.properties.MIDD_NAME}</b></p>
-        `;
-        <p><em>highschool: </em><b>${feature.properties.HGIH_NAME}</b></p>
+        <p><em>highschool: </em><b>${feature.properties.HIGH_NAME}</b></p>
         `;
 
         // actually calls the popup 
-        layer.blindPopup(popupContent);
+        layer.bindPopup(popupContent);
      }
 
         // Initialize the map, center it on UMD campus, and set the zoom level
@@ -124,22 +145,14 @@
         fetch("duluth_school_attendance_areas1.json")
             // once we fetch geojson we need to convert the response
             // into a json format 
-            .then(function(response){
-                const responseJSON = response.json()
-                console.log(response.json)
-                // pass along the json to the next function 
-                return response.json()
-            })
-            // take the json data (our geojson tile's data)
-            // and create a leaflet layer based on that geojson 
-            .then(function(geojsonData){
-                console.log('the geojson data', geojsonData)
-                L.geoJSON(geojsonData,
-                    {
-                        style: attendanceAreasStyle
-                        onEachFeature: attendanceAreasonEachFeature
-                    }
-                ).addTo(map)
+            .then(response => response.json())
+            .then(function(geojsonData) {
+                console.log('the geojson data', geojsonData);
+
+                L.geoJSON(geojsonData, {
+                    style: attendanceAreasStyle,
+                    onEachFeature: attendanceAreasonEachFeature
+                }).addTo(map);
             })
     </script>
 </body>
